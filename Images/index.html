@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Image</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div id="app" v-cloak v-if="dataLoaded">
+    <div>
+      <!-- Dropdown for category selection -->
+      <select v-model="selectedCategory" @change="updateElements">
+        <option disabled value="">Please select a category</option>
+        <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
+      </select>
+    </div>
+  
+    <div v-if="filteredElements.length">
+      <!-- Dropdown for element selection based on selected category -->
+      <select v-model="selectedElement" @change="loadImage">
+        <option disabled value="">Please select an element</option>
+        <option v-for="element in filteredElements" :key="element.id" :value="element.image">{{ element.name }}</option>
+      </select>
+    </div>
+  
+    <div v-if="shouldShowImage" @mousemove="handleHover">
+      <!-- Wrap your image with the hover event -->
+      <img 
+        :src="loadedImage" 
+        alt="image"
+        ref="imageElement"
+        @click="handleClick"
+        style="width: 300px; height: 300px; border: 1px solid #000;"
+      >
+      <!-- Drawing canvas -->
+      <canvas
+      ref="drawingCanvas"
+      width="300"
+      height="300"
+      style="position: absolute; top: 0; left: 0; pointer-events: none;"
+    ></canvas>    </div>
+    <button @click="toggleRecording">
+      {{ isRecordingCoordinates ? 'Stop Recording' : 'Start Recording' }}
+    </button>
+    <button @click="saveCoordinates">Save Coordinates</button>
+
+    <p></p>
+    <div v-if="tooltipVisible && hoveredLabel" class="tooltip" :style="{ top: tooltipY + 'px', left: tooltipX + 'px' }">
+      {{ hoveredLabel }}
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script src="script.js"></script>
+  <script src="data.js"></script>
+
+</body>
+</html>

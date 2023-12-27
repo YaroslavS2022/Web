@@ -1,0 +1,18 @@
+/* ... existing styles ... */
+
+.image-container {
+  position: relative; /* Ensure the container is a positioning context */
+  display: inline-block; /* To contain the image and tooltip */
+}
+
+.tooltip {
+  position: absolute;
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 4px;
+  pointer-events: none; /* Allows mouse events to pass through */
+}
+[v-cloak] {
+  display: none;
+}
